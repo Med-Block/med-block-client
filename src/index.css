@@ -6,4 +6,5 @@
 
 button {
   cursor: pointer;
+  border: none;
 }

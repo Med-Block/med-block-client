@@ -42,6 +42,11 @@
     text-align: center;
 }
 
+.log_in__header__service_name {
+    color: #006100;
+    margin-left: 10px;
+}
+
 .log_in__data {
     display: flex;
     flex-direction: column;

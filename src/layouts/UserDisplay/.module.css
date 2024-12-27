@@ -1,0 +1,132 @@
+.user_display {
+    position: fixed;
+    display: grid;
+    grid-template-rows: 55px auto;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.user_display__top {
+    position: relative;
+    display: grid;
+    grid-template-columns: 137px auto;
+    border-bottom: 5px solid #008000;
+    padding-inline: 10px;
+}
+
+.user_display__top__section_1 {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user_display__top__section_1__logo {
+    cursor: pointer;
+    color: #006100;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.user_display__top__section_2 {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 100px;
+    grid-column-gap: 10px;
+}
+
+.user_display__top__section_2__user_info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
+}
+
+.user_display__top__section_2__user_info__value {
+    display: -webkit-box;
+    width: 100%;
+    text-overflow: ellipsis;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-align: right;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    font-size: 1.05rem;
+    font-weight: bold;
+}
+
+.user_display__top__section_2__options {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user_display__top__section_2__options__sign_out {
+    width: 100%;
+    background-color: #008000;
+    color: #ffffff;
+    font-size: 1.2rem;
+    border-radius: 3px;
+    padding-block: 5px;
+
+    &:hover {
+        background-color: #006100;
+    }
+}
+
+.user_display__bottom {
+    position: relative;
+    display: grid;
+    grid-template-columns: 50px auto;
+}
+
+.user_display__bottom__navigation {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 55px);
+    background-color: #008000;
+    overflow-y: scroll;
+    
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.user_display__bottom__navigation__element {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    &:hover {
+        background-color: #ffffff;
+    }
+
+    &:hover>.user_display__bottom__navigation__element__img path {
+        fill: #008000;
+    }
+}
+
+.user_display__bottom__navigation__element__img {
+    width: 35px;
+    height: 35px;
+}
+
+.user_display__bottom__content {
+    position: relative;
+    height: calc(100vh - 55px);
+    overflow-y: scroll;
+    
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
