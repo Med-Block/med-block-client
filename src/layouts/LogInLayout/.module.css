@@ -24,8 +24,8 @@
     -moz-box-shadow: 4px 4px 13px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 4px 4px 13px 0px rgba(0, 0, 0, 0.75);
     padding-inline: 35px;
-    padding-top: 20px;
-    padding-bottom: 30px;
+    padding-top: 15px;
+    padding-bottom: 20px;
 
     &.fixed {
         top: 0;
@@ -40,38 +40,43 @@
 
 .log_in__header {
     text-align: center;
+    font-size: 1.8rem;
 }
 
 .log_in__header__service_name {
     color: #006100;
-    margin-left: 10px;
+    margin-left: 9px;
 }
 
 .log_in__data {
     display: flex;
     flex-direction: column;
-    margin-top: 15px;
+    margin-top: 12px;
 }
 
 .log_in__data__input {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     border: 3px solid #808080;
     border-radius: 5px;
     outline: none;
-    padding-block: 5px;
+    padding-block: 4px;
     padding-left: 3px;
-    margin-top: 15px;
+    margin-top: 12px;
 }
 
 .log_in__submit {
     width: 100%;
     background-color: #008000;
     color: #ffffff;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     border: none;
-    border-radius: 5px;
-    padding-block: 5px;
-    margin-top: 30px;
+    border-radius: 4px;
+    padding-block: 4px;
+    margin-top: 24px;
+
+    &:disabled {
+        background-color: #808080;
+    }
 
     &:hover {
         background-color: #006100;

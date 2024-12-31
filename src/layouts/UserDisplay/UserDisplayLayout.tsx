@@ -1,8 +1,49 @@
 import React from "react";
 import cl from "./.module.css";
 import { Outlet } from "react-router-dom";
+import advancedFetch from "../../services/advancedFetch";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { setCurrentUser } from "../../redux/slices/userSlice";
 
 const UserDisplayLayout: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const currentUser = useAppSelector((state) => state.user.currentUser);
+
+  const loadUserData = React.useCallback(async () => {
+    try {
+      const response = await advancedFetch(`http://${window.location.hostname}:7000/api/user/self`, {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          "Authorization": localStorage.getItem('token') ?
+            `Bearer ${localStorage.getItem('token')}` : ""
+        }
+      });
+  
+      if (response.ok) {
+        const json = await response.json();
+        dispatch(setCurrentUser({
+          firstName: json.firstName,
+          lastName: json.lastName,
+          role: json.role
+        }));
+      }
+    } catch (error) {
+      alert(`Error while checking authorization: ${error}`);
+    }
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    loadUserData();
+  }, [loadUserData]);
+
+  if (!currentUser) {
+    return (
+      <p>Loading...</p>
+    );
+  }
+
   return (
     <div className={cl.user_display}>
       <header className={cl.user_display__top}>
@@ -14,15 +55,19 @@ const UserDisplayLayout: React.FC = () => {
         <div className={cl.user_display__top__section_2}>
           <div className={cl.user_display__top__section_2__user_info}>
             <p className={cl.user_display__top__section_2__user_info__value}>
-              First name
+              {currentUser.firstName}
             </p>
             <p className={cl.user_display__top__section_2__user_info__value}>
-              Last name
+            {currentUser.lastName}
             </p>
           </div>
           <div className={cl.user_display__top__section_2__options}>
-            <button className={cl.user_display__top__section_2__options__sign_out}>
-              Sign out
+            <button className={cl.user_display__top__section_2__options__log_out}
+              onClick={() => {
+                localStorage.removeItem('token');
+                window.location.replace('log-in');
+              }}>
+              Log out
             </button>
           </div>
         </div>
