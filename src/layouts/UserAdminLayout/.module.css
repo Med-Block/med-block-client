@@ -1,0 +1,94 @@
+.user_admin {
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1000px;
+    margin-left: 50%;
+}
+
+.user_admin__control {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.user_admin__control__register {
+    width: 100%;
+    max-width: 400px;
+    background-color: #008000;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    padding-block: 7px;
+    padding-inline: 7px;
+
+    &:hover {
+        background-color: #006100;
+    }
+}
+
+.user_admin__list {
+    margin-top: 20px;
+}
+
+.user_admin__list__element {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 0.5fr;
+    grid-column-gap: 10px;
+    background-color: #deffde;
+    border: 3px solid #008000;
+    border-radius: 10px;
+    padding-inline: 5px;
+    padding-block: 10px;
+
+    &:not(:first-child) {
+        margin-top: 20px;
+    }
+}
+
+.user_admin__list__element__text_field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.user_admin__list__element__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.user_admin__list__element__actions__edit {
+    width: 100%;
+    background-color: #ffa500;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    padding-block: 2px;
+
+    &:hover {
+        background-color: #b67600;
+    }
+}
+
+.user_admin__list__element__actions__delete {
+    width: 100%;
+    background-color: #ff0000;
+    color: #ffffff;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    padding-block: 2px;
+    margin-top: 5px;
+
+    &:hover {
+        background-color: #b40000;
+    }
+}
