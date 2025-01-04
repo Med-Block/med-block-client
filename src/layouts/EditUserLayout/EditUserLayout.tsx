@@ -157,7 +157,7 @@ const EditUserLayout: React.FC = () => {
 
     React.useEffect(() => {
         if (!['admin', 'doctor'].includes(currentUser?.role || '')) {
-            navigate('/my-records');
+            navigate('/');
         }
     }, [currentUser?.role, navigate]);
 
