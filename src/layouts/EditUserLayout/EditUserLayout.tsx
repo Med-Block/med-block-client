@@ -4,6 +4,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAppSelector } from "../../redux/store";
 import advancedFetch from "../../utils/advancedFetch";
 import UserData from "../../data_types/UserData";
+import YesNoDialog from "../../components/YesNoDialog/YesNoDialog";
 
 const EditUserLayout: React.FC = () => {
     const [isSaving, setIsSaving] = React.useState<boolean>(false);
@@ -11,6 +12,8 @@ const EditUserLayout: React.FC = () => {
     const [userToEdit, setUserToEdit] = React.useState<UserData | null | undefined>(null);
     const [isUserFound, setIsUserFound] = React.useState<boolean>(false);
     const [roleValue, setRoleValue] = React.useState<string>('user');
+
+    const [yesNoDialogIsOpened, setYesNoDialogIsOpened] = React.useState<boolean>(false);
 
     const emailInputRef = React.useRef<HTMLInputElement>(null);
     const firstNameInputRef = React.useRef<HTMLInputElement>(null);
@@ -114,6 +117,34 @@ const EditUserLayout: React.FC = () => {
 
         setIsSaving(false);
     }
+
+    const resetPasswordRequest = React.useCallback(async () => {
+        try {
+            const response = await advancedFetch(`http://${window.location.hostname}:7000/api/user/${userId}/reset-password`, {
+                method: "POST",
+                mode: "cors",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": localStorage.getItem('token') ?
+                        `Bearer ${localStorage.getItem('token')}` : ""
+                }
+            });
+
+            if (response.ok) {
+                setYesNoDialogIsOpened(false);
+                alert('Password has been reset');
+            } else {
+                alert(await response.text());
+            }
+        } catch (error) {
+            alert(`Error while checking authorization: ${error}`);
+        }
+    }, [userId]);
+
+    const cancelPasswordResetting = React.useCallback(() => {
+        setYesNoDialogIsOpened(false);
+    }, []);
 
     React.useEffect(() => {
         if (userId !== 'new') {
@@ -230,6 +261,18 @@ const EditUserLayout: React.FC = () => {
                         </div>
                         : <></>
                 }
+                {
+                    currentUser?.role === 'admin' ?
+                    <div className={cl.edit_user__data__field}>
+                        <button
+                            className={cl.edit_user__data__field__button}
+                            type="button"
+                            onClick={() => setYesNoDialogIsOpened(true)}>
+                            Reset user's password
+                        </button>
+                    </div>
+                    : <></>
+                }
             </div>
             <div className={cl.edit_user__control}>
                 <button
@@ -242,6 +285,12 @@ const EditUserLayout: React.FC = () => {
                     Go to the list
                 </Link>
             </div>
+            <YesNoDialog
+                dialogState={yesNoDialogIsOpened}
+                title='Reset password'
+                description="Are you sure you want to reset the user's password? New password will be sent to the user by email."
+                onYesButtonClick={resetPasswordRequest}
+                onNoButtonClick={cancelPasswordResetting} />
         </div>
     );
 };

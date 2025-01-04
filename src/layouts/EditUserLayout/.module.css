@@ -59,6 +59,20 @@
     }
 }
 
+.edit_user__data__field__button {
+    background-color: #d18800;
+    color: #ffffff;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    padding-block: 5px;
+    padding-inline: 6px;
+    margin-top: 3px;
+
+    &:hover {
+        background-color: #8f5d00;
+    }
+}
+
 .edit_user__control {
     display: flex;
     width: 100%;
