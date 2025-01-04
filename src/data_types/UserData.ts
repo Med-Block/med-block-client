@@ -4,5 +4,5 @@ export default interface UserData {
     firstName: string,
     lastName: string,
     role: string,
-    position: string | null
+    position?: string
 }

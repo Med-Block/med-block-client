@@ -39,6 +39,10 @@
     padding-block: 5px;
     padding-left: 3px;
     margin-top: 3px;
+
+    &:disabled {
+        border: 3px solid #808080;
+    }
 }
 
 .edit_user__data__field__select {
@@ -49,6 +53,10 @@
     padding-block: 5px;
     padding-left: 3px;
     margin-top: 3px;
+
+    &:disabled {
+        border: 3px solid #808080;
+    }
 }
 
 .edit_user__control {

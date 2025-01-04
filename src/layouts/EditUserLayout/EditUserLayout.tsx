@@ -66,7 +66,7 @@ const EditUserLayout: React.FC = () => {
                     firstName: firstNameInputRef.current?.value,
                     lastName: lastNameInputRef.current?.value,
                     role: roleValue,
-                    position: positionInputRef.current?.value || null
+                    position: positionInputRef.current?.value || undefined
                 })
             });
 
@@ -96,16 +96,15 @@ const EditUserLayout: React.FC = () => {
                         `Bearer ${localStorage.getItem('token')}` : ""
                 },
                 body: JSON.stringify({
-                    email: emailInputRef.current?.value,
                     firstName: firstNameInputRef.current?.value,
                     lastName: lastNameInputRef.current?.value,
                     role: roleValue,
-                    position: positionInputRef.current?.value || null
+                    position: positionInputRef.current?.value || undefined
                 })
             });
 
             if (response.ok) {
-                alert('Data is saved');
+                alert('User info is saved');
             } else {
                 alert(await response.text());
             }
@@ -157,27 +156,49 @@ const EditUserLayout: React.FC = () => {
                     <label className={cl.edit_user__data__field__label}>
                         Email address
                     </label>
-                    <input className={cl.edit_user__data__field__input} type="email" defaultValue={userToEdit?.email} placeholder="Email address" maxLength={50} ref={emailInputRef} />
+                    <input
+                        className={cl.edit_user__data__field__input}
+                        type="email"
+                        defaultValue={userToEdit?.email}
+                        placeholder="Email address"
+                        maxLength={50}
+                        disabled={userId !== 'new'}
+                        ref={emailInputRef} />
                 </div>
                 <div className={cl.edit_user__data__field}>
                     <label className={cl.edit_user__data__field__label}>
                         First name
                     </label>
-                    <input className={cl.edit_user__data__field__input} type="text" defaultValue={userToEdit?.firstName} placeholder="First name" maxLength={50} ref={firstNameInputRef} />
+                    <input
+                        className={cl.edit_user__data__field__input}
+                        type="text"
+                        defaultValue={userToEdit?.firstName}
+                        placeholder="First name"
+                        maxLength={50}
+                        ref={firstNameInputRef} />
                 </div>
                 <div className={cl.edit_user__data__field}>
                     <label className={cl.edit_user__data__field__label}>
                         Last name
                     </label>
-                    <input className={cl.edit_user__data__field__input} type="text" defaultValue={userToEdit?.lastName} placeholder="Last name" maxLength={50} ref={lastNameInputRef} />
+                    <input
+                        className={cl.edit_user__data__field__input}
+                        type="text"
+                        defaultValue={userToEdit?.lastName}
+                        placeholder="Last name"
+                        maxLength={50}
+                        ref={lastNameInputRef} />
                 </div>
                 {
-                    currentUser.id !== userToEdit?.id ?
+                    currentUser.id !== userToEdit?.id && currentUser.role === 'admin' ?
                         <div className={cl.edit_user__data__field}>
                             <label className={cl.edit_user__data__field__label}>
                                 Role
                             </label>
-                            <select className={cl.edit_user__data__field__select} value={roleValue} title="role"
+                            <select
+                                className={cl.edit_user__data__field__select}
+                                value={roleValue}
+                                title="role"
                                 disabled={currentUser?.role !== 'admin'}
                                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRoleValue(e.target.value)}>
                                 <option className={cl.edit_user__data__select__option} value='user'>
@@ -199,15 +220,22 @@ const EditUserLayout: React.FC = () => {
                             <label className={cl.edit_user__data__field__label}>
                                 Position
                             </label>
-                            <input className={cl.edit_user__data__field__input} type="text" defaultValue={userToEdit?.position ?? ''} placeholder="Position" maxLength={50} ref={positionInputRef} />
+                            <input
+                                className={cl.edit_user__data__field__input}
+                                type="text"
+                                defaultValue={userToEdit?.position}
+                                placeholder="Position"
+                                maxLength={50}
+                                ref={positionInputRef} />
                         </div>
                         : <></>
                 }
             </div>
             <div className={cl.edit_user__control}>
-                <button className={cl.edit_user__control__save}
+                <button
+                    className={cl.edit_user__control__save}
                     disabled={isSaving}
-                        onClick={userId === 'new' ? registerUserRequest : updateUserRequest}>
+                    onClick={userId === 'new' ? registerUserRequest : updateUserRequest}>
                     Save
                 </button>
                 <Link className={cl.edit_user__control__to_list} to='/admin/users'>

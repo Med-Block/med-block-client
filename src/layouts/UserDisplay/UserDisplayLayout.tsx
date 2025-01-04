@@ -31,7 +31,7 @@ const UserDisplayLayout: React.FC = () => {
                     firstName: json.firstName,
                     lastName: json.lastName,
                     role: json.role,
-                    position: json.position
+                    position: json.position ?? undefined
                 }));
             } else {
                 const allowedRoutes = ['log-in'];

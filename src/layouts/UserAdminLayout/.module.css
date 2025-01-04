@@ -29,7 +29,28 @@
 }
 
 .user_admin__list {
+    margin-top: 30px;
+}
+
+.user_admin__list__header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 0.5fr;
+    grid-column-gap: 10px;
+    background-color: #87c587;
+    padding-inline: 8px;
+    padding-block: 10px;
     margin-top: 20px;
+}
+
+.user_admin__list__header__column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.1rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .user_admin__list__element {
@@ -41,10 +62,7 @@
     border-radius: 10px;
     padding-inline: 5px;
     padding-block: 10px;
-
-    &:not(:first-child) {
-        margin-top: 20px;
-    }
+    margin-top: 20px;
 }
 
 .user_admin__list__element__text_field {

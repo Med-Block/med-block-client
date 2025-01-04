@@ -77,6 +77,26 @@ const UserAdminLayout: React.FC = () => {
                 </Link>
             </div>
             <div className={cl.user_admin__list}>
+                <div className={cl.user_admin__list__header}>
+                    <div className={cl.user_admin__list__header__column}>
+                        Email address
+                    </div>
+                    <div className={cl.user_admin__list__header__column}>
+                        First name
+                    </div>
+                    <div className={cl.user_admin__list__header__column}>
+                        Last name
+                    </div>
+                    <div className={cl.user_admin__list__header__column}>
+                        Role
+                    </div>
+                    <div className={cl.user_admin__list__header__column}>
+                        Position
+                    </div>
+                    <div className={cl.user_admin__list__header__column}>
+                        Actions
+                    </div>
+                </div>
                 {userList?.map((el, idx) => {
                     return (
                         <div className={cl.user_admin__list__element} key={idx}>
@@ -97,7 +117,7 @@ const UserAdminLayout: React.FC = () => {
                             </div>
                             <div className={cl.user_admin__list__element__actions}>
                                 {
-                                    currentUser?.role === 'admin' || (currentUser?.role === 'doctor' && el.role === 'user' && currentUser?.id !== el.id) ?
+                                    currentUser?.role === 'admin' || (currentUser?.role === 'doctor' && currentUser?.id !== el.id) ?
                                         <Link className={cl.user_admin__list__element__actions__edit} to={`/edit-user?id=${el.id}`}>
                                             Edit
                                         </Link>
