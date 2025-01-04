@@ -33,18 +33,11 @@ const UserDisplayLayout: React.FC = () => {
                     role: json.role,
                     position: json.position ?? undefined
                 }));
-            } else {
-                const allowedRoutes = ['log-in'];
-                localStorage.removeItem('token');
-
-                if (!allowedRoutes.includes(window.location.pathname.split('/')[1])) {
-                    navigate('/log-in', { replace: true });
-                }
             }
         } catch (error) {
             alert(`Error while checking authorization: ${error}`);
         }
-    }, [dispatch, navigate]);
+    }, [dispatch]);
 
     React.useEffect(() => {
         loadUserData();

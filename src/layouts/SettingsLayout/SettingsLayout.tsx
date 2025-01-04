@@ -133,6 +133,26 @@ const SettingsLayout: React.FC = () => {
                             </div>
                         </> : <></>
                 }
+                <div className={cl.settings__data__field}>
+                    <label className={cl.settings__data__field__label}>
+                        Role
+                    </label>
+                    <p className={cl.settings__data__field__value}>
+                        {currentUser?.role}
+                    </p>
+                </div>
+                {
+                    currentUser?.role === 'doctor' ?
+                        <div className={cl.settings__data__field}>
+                            <label className={cl.settings__data__field__label}>
+                                Position
+                            </label>
+                            <p className={cl.settings__data__field__value}>
+                                {currentUser?.position}
+                            </p>
+                        </div>
+                        : <></>
+                }
                 <div className={cl.settings__data__control}>
                     <button
                         className={cl.settings__data__control__apply}

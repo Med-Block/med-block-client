@@ -43,10 +43,10 @@
     padding-block: 5px;
     padding-left: 3px;
     margin-top: 3px;
+}
 
-    &:disabled {
-        border: 3px solid #808080;
-    }
+.settings__data__field__value {
+    font-size: 1.1rem;
 }
 
 .settings__data__control {
