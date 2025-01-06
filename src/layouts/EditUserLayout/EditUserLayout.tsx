@@ -101,7 +101,6 @@ const EditUserLayout: React.FC = () => {
                 body: JSON.stringify({
                     firstName: firstNameInputRef.current?.value,
                     lastName: lastNameInputRef.current?.value,
-                    role: roleValue,
                     position: positionInputRef.current?.value || undefined
                 })
             });
@@ -230,7 +229,7 @@ const EditUserLayout: React.FC = () => {
                                 className={cl.edit_user__data__field__select}
                                 value={roleValue}
                                 title="role"
-                                disabled={currentUser?.role !== 'admin'}
+                                disabled={userId !== 'new'}
                                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRoleValue(e.target.value)}>
                                 <option className={cl.edit_user__data__select__option} value='user'>
                                     User

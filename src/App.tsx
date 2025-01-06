@@ -7,6 +7,8 @@ import AdminLayout from './layouts/AdminLayout/AdminLayout';
 import UserAdminLayout from './layouts/UserAdminLayout/UserAdminLayout';
 import EditUserLayout from './layouts/EditUserLayout/EditUserLayout';
 import SettingsLayout from './layouts/SettingsLayout/SettingsLayout';
+import DoctorBrowseLayout from './layouts/DoctorBrowseLayout/DoctorBrowseLayout';
+import DoctorsWithLicenseLayout from './layouts/DoctorsWithLicenseLayout/DoctorsWithLicenseLayout';
 
 function App() {
     return (
@@ -16,9 +18,11 @@ function App() {
                     <Route path='' element={<UserDisplayLayout />}>
                         <Route index element={<></>} />
                         <Route path='my-records' element={<></>} />
-                        <Route path='owned-licenses' element={<></>} />
-                        <Route path='given-licenses' element={<></>} />
-                        <Route path='doctors' element={<></>} />
+                        <Route path='doctors' element={<DoctorBrowseLayout />}>
+                            <Route index element={<></>} />
+                            <Route path='with-license' element={<DoctorsWithLicenseLayout />} />
+                            <Route path='all' element={<></>} />
+                        </Route>
                         <Route path='settings' element={<SettingsLayout />} />
                         <Route path='admin' element={<AdminLayout />}>
                             <Route index element={<></>} />
