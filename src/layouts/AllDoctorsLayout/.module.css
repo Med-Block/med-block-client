@@ -1,17 +1,17 @@
-.doctors_with_license {
+.all_doctors {
     transform: translateX(-50%);
     width: 100%;
     max-width: 1000px;
     margin-left: 50%;
 }
 
-.doctors_with_license__control {
+.all_doctors__control {
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
-.doctors_with_license__control__register {
+.all_doctors__control__register {
     width: 100%;
     max-width: 400px;
     background-color: #008000;
@@ -28,11 +28,11 @@
     }
 }
 
-.doctors_with_license__list {
+.all_doctors__list {
     margin-top: 30px;
 }
 
-.doctors_with_license__list__header {
+.all_doctors__list__header {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;
     grid-column-gap: 10px;
@@ -42,7 +42,7 @@
     margin-top: 20px;
 }
 
-.doctors_with_license__list__header__column {
+.all_doctors__list__header__column {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,7 +53,7 @@
     word-break: break-all;
 }
 
-.doctors_with_license__list__element {
+.all_doctors__list__element {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;
     grid-column-gap: 10px;
@@ -65,7 +65,7 @@
     margin-top: 20px;
 }
 
-.doctors_with_license__list__element__text_field {
+.all_doctors__list__element__text_field {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,16 +75,16 @@
     word-break: break-all;
 }
 
-.doctors_with_license__list__element__actions {
+.all_doctors__list__element__actions {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.doctors_with_license__list__element__actions__disable {
+.all_doctors__list__element__actions__record_access {
     width: 100%;
-    background-color: #ff0000;
+    background-color: #008000;
     color: #ffffff;
     text-align: center;
     text-decoration: none;
@@ -92,7 +92,15 @@
     border-radius: 5px;
     padding-block: 2px;
 
+    &.disable {
+        background-color: #ff0000;
+    }
+
     &:hover {
+        background-color: #006100;
+    }
+
+    &.disable:hover {
         background-color: #b40000;
     }
 }

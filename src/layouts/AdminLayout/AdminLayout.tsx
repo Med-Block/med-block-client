@@ -1,29 +1,20 @@
 import React from "react";
 import cl from "./.module.css";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../redux/store";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 const AdminLayout: React.FC = () => {
-    const currentUser = useAppSelector((state) => state.user.currentUser);
-
-    const navigate = useNavigate();
-
-    React.useEffect(() => {
-        if (!['admin', 'doctor'].includes(currentUser?.role || '')) {
-            navigate('/');
-        }
-    }, [currentUser?.role, navigate]);
+    const location = useLocation();
 
     return (
         <div className={cl.admin}>
             <nav className={cl.admin__navigation}>
                 <NavLink
-                    className={`${cl.admin__navigation__element} ${window.location.pathname === "/admin/users" ? cl.current : ''}`}
+                    className={`${cl.admin__navigation__element} ${location.pathname === "/admin/users" ? cl.current : ''}`}
                     to="/admin/users">
                     Users
                 </NavLink>
                 <NavLink
-                    className={`${cl.admin__navigation__element} ${window.location.pathname === "/admin/license-history" ? cl.current : ''}`}
+                    className={`${cl.admin__navigation__element} ${location.pathname === "/admin/license-history" ? cl.current : ''}`}
                     to="/admin/license-history">
                     License history
                 </NavLink>

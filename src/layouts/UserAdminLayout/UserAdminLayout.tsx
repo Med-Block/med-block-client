@@ -1,17 +1,28 @@
 import React from "react";
 import cl from "./.module.css";
-import UserData from "../../data_types/UserData";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import advancedFetch from "../../utils/advancedFetch";
 import { useAppSelector } from "../../redux/store";
 import YesNoDialog from "../../components/YesNoDialog/YesNoDialog";
 
+interface UserDataForDoctors {
+    id: number,
+    email: string,
+    firstName: string,
+    lastName: string,
+    role: string,
+    position?: string,
+    hasDataAccess?: boolean
+}
+
 const UserAdminLayout: React.FC = () => {
-    const [userList, setUserList] = React.useState<Array<UserData> | null>(null);
+    const [userList, setUserList] = React.useState<Array<UserDataForDoctors> | null>(null);
     const [userIdToDelete, setUserIdToDelete] = React.useState<number | null>(null);
     const [yesNoDialogIsOpened, setYesNoDialogIsOpened] = React.useState<boolean>(false);
 
     const currentUser = useAppSelector((state) => state.user.currentUser);
+
+    const navigate = useNavigate();
 
     const loadUserList = React.useCallback(async () => {
         try {
@@ -30,7 +41,7 @@ const UserAdminLayout: React.FC = () => {
                 setUserList(json);
             }
         } catch (error) {
-            alert(`Error while checking authorization: ${error}`);
+            alert(error);
         }
     }, []);
 
@@ -56,7 +67,7 @@ const UserAdminLayout: React.FC = () => {
                 alert(await response.text());
             }
         } catch (error) {
-            alert(`Error while checking authorization: ${error}`);
+            alert(error);
         }
     }, [userIdToDelete]);
 
@@ -68,6 +79,12 @@ const UserAdminLayout: React.FC = () => {
     React.useEffect(() => {
         loadUserList();
     }, [loadUserList]);
+
+    React.useEffect(() => {
+        if (!['admin', 'doctor'].includes(currentUser?.role || '')) {
+            navigate('/');
+        }
+    }, [currentUser?.role, navigate]);
 
     return (
         <div className={cl.user_admin}>
@@ -120,6 +137,13 @@ const UserAdminLayout: React.FC = () => {
                                     currentUser?.role === 'admin' || (currentUser?.role === 'doctor' && currentUser?.id !== el.id) ?
                                         <Link className={cl.user_admin__list__element__actions__edit} to={`/edit-user?id=${el.id}`}>
                                             Edit
+                                        </Link>
+                                        : <></>
+                                }
+                                {
+                                    currentUser?.role === 'doctor' && el.hasDataAccess && currentUser?.id !== el.id ?
+                                        <Link className={cl.user_admin__list__element__actions__records} to={`/records?id=${el.id}`}>
+                                            Records
                                         </Link>
                                         : <></>
                                 }

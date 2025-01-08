@@ -79,25 +79,44 @@ const UserDisplayLayout: React.FC = () => {
             </header>
             <main className={cl.user_display__bottom}>
                 <nav className={cl.user_display__bottom__navigation}>
-                    <NavLink className={cl.user_display__bottom__navigation__element} to="/my-records">
-                        <svg className={cl.user_display__bottom__navigation__element__img}
-                            fill="#ffffff" width="800px" height="800px" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" d="M208,32H48A16.01833,16.01833,0,0,0,32,48V208a16.01833,16.01833,0,0,0,16,16H208a16.01833,16.01833,0,0,0,
-                            16-16V48A16.01833,16.01833,0,0,0,208,32ZM80,208H48V48H80Zm96-56H112a8,8,0,0,1,0-16h64a8,8,0,0,1,0,
-                            16Zm0-32H112a8,8,0,0,1,0-16h64a8,8,0,0,1,0,16Z" />
-                        </svg>
-                    </NavLink>
                     {
                         currentUser.role === 'user' ?
-                            <NavLink className={cl.user_display__bottom__navigation__element} to="/doctors/with-license">
+                            <>
+                                <NavLink className={cl.user_display__bottom__navigation__element} to="/my-records">
+                                    <svg className={cl.user_display__bottom__navigation__element__img}
+                                        fill="#ffffff" width="800px" height="800px" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg">
+                                        <path fillRule="evenodd" d="M208,32H48A16.01833,16.01833,0,0,0,32,48V208a16.01833,16.01833,0,0,0,16,16H208a16.01833,16.01833,0,0,0,
+                                        16-16V48A16.01833,16.01833,0,0,0,208,32ZM80,208H48V48H80Zm96-56H112a8,8,0,0,1,0-16h64a8,8,0,0,1,0,
+                                        16Zm0-32H112a8,8,0,0,1,0-16h64a8,8,0,0,1,0,16Z" />
+                                    </svg>
+                                </NavLink>
+                                <NavLink className={cl.user_display__bottom__navigation__element} to="/doctors/with-license">
+                                    <svg className={cl.user_display__bottom__navigation__element__img}
+                                        fill="#ffffff" width="800px" height="800px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                        <path fillRule="evenodd" d="M24 25.1333C28.9725 25.1333 33 21.076 33 16.0667C33 11.0573 28.9725 7 24 7C19.0275
+                                        7 15 11.0573 15 16.0667C15 21.076 19.0275 25.1333 24 25.1333Z" />
+                                        <path fillRule="evenodd" clipRule="evenodd" d="M18.1254 28.9539C17.8971 28.4861 17.3814 28.2333 16.8786
+                                        28.3569C11.4745 29.6849 6 32.3928 6 36.4664V42.9997H42V36.4664C42 32.3928 36.5255 29.6849 31.1214 28.3569C30.6186
+                                        28.2333 30.1029 28.4861 29.8746 28.9539L25.8105 31.9539C24.9218 31.9541 24.4693 31.9541 24.0248 31.954C23.5637
+                                        31.954 23.1112 31.954 22.1893 31.9542L18.1254 28.9539ZM31 31H33V34H36V36H33V39H31V36H28V34H31V31Z" />
+                                    </svg>
+                                </NavLink>
+                            </> : <></>
+                    }
+                    {
+                        ['admin', 'doctor'].includes(currentUser.role || '') ?
+                            <NavLink className={cl.user_display__bottom__navigation__element} to="/admin/users">
                                 <svg className={cl.user_display__bottom__navigation__element__img}
-                                    fill="#ffffff" width="800px" height="800px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" d="M24 25.1333C28.9725 25.1333 33 21.076 33 16.0667C33 11.0573 28.9725 7 24 7C19.0275
-                            7 15 11.0573 15 16.0667C15 21.076 19.0275 25.1333 24 25.1333Z" />
-                                    <path fillRule="evenodd" clipRule="evenodd" d="M18.1254 28.9539C17.8971 28.4861 17.3814 28.2333 16.8786
-                            28.3569C11.4745 29.6849 6 32.3928 6 36.4664V42.9997H42V36.4664C42 32.3928 36.5255 29.6849 31.1214 28.3569C30.6186
-                            28.2333 30.1029 28.4861 29.8746 28.9539L25.8105 31.9539C24.9218 31.9541 24.4693 31.9541 24.0248 31.954C23.5637
-                            31.954 23.1112 31.954 22.1893 31.9542L18.1254 28.9539ZM31 31H33V34H36V36H33V39H31V36H28V34H31V31Z" />
+                                    fill="#ffffff" width="800px" height="800px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M983.727 5.421 1723.04 353.62c19.765 9.374 32.414 29.252 32.414 51.162v601.525c0 489.6-424.207 719.774-733.779
+                                    887.943l-34.899 18.975c-8.47 4.517-17.731 6.889-27.105 6.889-9.262 0-18.523-2.372-26.993-6.89l-34.9-18.974C588.095
+                                    1726.08 164 1495.906 164 1006.306V404.78c0-21.91 12.65-41.788 32.414-51.162L935.727 5.42c15.134-7.228 32.866-7.228 48
+                                    0ZM757.088 383.322c-176.075 0-319.285 143.323-319.285 319.398 0 176.075 143.21 319.285 319.285 319.285 1.92 0 3.84 0
+                                    5.76-.113l58.504 58.503h83.689v116.781h116.781v83.803l91.595 91.482h313.412V1059.05l-350.57-350.682c.114-1.807.114-3.727.114-5.647
+                                    0-176.075-143.21-319.398-319.285-319.398Zm0 112.942c113.732 0 206.344 92.724 205.327 216.62l-3.953 37.271 355.426
+                                    355.652v153.713h-153.713l-25.412-25.299v-149.986h-116.78v-116.78H868.108l-63.812-63.7-47.209 5.309c-113.732
+                                    0-206.344-92.5-206.344-206.344 0-113.732 92.612-206.456 206.344-206.456Zm4.98 124.98c-46.757 0-84.705 37.948-84.705
+                                    84.706s37.948 84.706 84.706 84.706c46.757 0 84.706-37.948 84.706-84.706s-37.949-84.706-84.706-84.706Z" fillRule="evenodd" />
                                 </svg>
                             </NavLink>
                             : <></>
@@ -128,24 +147,6 @@ const UserDisplayLayout: React.FC = () => {
                             12.5 15Z" />
                         </svg>
                     </NavLink>
-                    {
-                        ['admin', 'doctor'].includes(currentUser.role || '') ?
-                            <NavLink className={cl.user_display__bottom__navigation__element} to="/admin/users">
-                                <svg className={cl.user_display__bottom__navigation__element__img}
-                                    fill="#ffffff" width="800px" height="800px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M983.727 5.421 1723.04 353.62c19.765 9.374 32.414 29.252 32.414 51.162v601.525c0 489.6-424.207 719.774-733.779
-                                    887.943l-34.899 18.975c-8.47 4.517-17.731 6.889-27.105 6.889-9.262 0-18.523-2.372-26.993-6.89l-34.9-18.974C588.095
-                                    1726.08 164 1495.906 164 1006.306V404.78c0-21.91 12.65-41.788 32.414-51.162L935.727 5.42c15.134-7.228 32.866-7.228 48
-                                    0ZM757.088 383.322c-176.075 0-319.285 143.323-319.285 319.398 0 176.075 143.21 319.285 319.285 319.285 1.92 0 3.84 0
-                                    5.76-.113l58.504 58.503h83.689v116.781h116.781v83.803l91.595 91.482h313.412V1059.05l-350.57-350.682c.114-1.807.114-3.727.114-5.647
-                                    0-176.075-143.21-319.398-319.285-319.398Zm0 112.942c113.732 0 206.344 92.724 205.327 216.62l-3.953 37.271 355.426
-                                    355.652v153.713h-153.713l-25.412-25.299v-149.986h-116.78v-116.78H868.108l-63.812-63.7-47.209 5.309c-113.732
-                                    0-206.344-92.5-206.344-206.344 0-113.732 92.612-206.456 206.344-206.456Zm4.98 124.98c-46.757 0-84.705 37.948-84.705
-                                    84.706s37.948 84.706 84.706 84.706c46.757 0 84.706-37.948 84.706-84.706s-37.949-84.706-84.706-84.706Z" fillRule="evenodd" />
-                                </svg>
-                            </NavLink>
-                            : <></>
-                    }
                 </nav>
                 <div className={cl.user_display__bottom__content}>
                     <Outlet />
