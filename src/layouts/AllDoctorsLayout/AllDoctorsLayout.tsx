@@ -114,7 +114,7 @@ const AllDoctorsLayout: React.FC = () => {
         }, []);
 
     React.useEffect(() => {
-        if (currentUser?.role !== 'user') {
+        if (currentUser?.role !== 'patient') {
             navigate('/');
         }
     }, [currentUser?.role, navigate]);

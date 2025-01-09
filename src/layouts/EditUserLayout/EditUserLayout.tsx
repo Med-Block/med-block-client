@@ -232,7 +232,7 @@ const EditUserLayout: React.FC = () => {
                                 disabled={userId !== 'new'}
                                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRoleValue(e.target.value)}>
                                 <option className={cl.edit_user__data__select__option} value='user'>
-                                    User
+                                    Patient
                                 </option>
                                 <option className={cl.edit_user__data__select__option} value='doctor'>
                                     Doctor

@@ -10,6 +10,7 @@ import SettingsLayout from './layouts/SettingsLayout/SettingsLayout';
 import DoctorBrowseLayout from './layouts/DoctorBrowseLayout/DoctorBrowseLayout';
 import DoctorsWithLicenseLayout from './layouts/DoctorsWithLicenseLayout/DoctorsWithLicenseLayout';
 import AllDoctorsLayout from './layouts/AllDoctorsLayout/AllDoctorsLayout';
+import AdminLicenseHistoryLayout from './layouts/AdminLicenseHistoryLayout/AdminLicenseHistoryLayout';
 
 function App() {
     return (
@@ -28,7 +29,7 @@ function App() {
                         <Route path='admin' element={<AdminLayout />}>
                             <Route index element={<></>} />
                             <Route path='users' element={<UserAdminLayout />} />
-                            <Route path='license-history' element={<></>} />
+                            <Route path='license-history' element={<AdminLicenseHistoryLayout />} />
                         </Route>
                         <Route path='edit-user' element={<EditUserLayout />} />
                         <Route path='records' element={<></>} />

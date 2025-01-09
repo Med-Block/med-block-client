@@ -1,0 +1,79 @@
+.license_history {
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1000px;
+    margin-left: 50%;
+}
+
+.license_history__control {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.license_history__list {
+    margin-top: 10px;
+}
+
+.license_history__list__header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 10px;
+    background-color: #87c587;
+    padding-inline: 8px;
+    padding-block: 10px;
+}
+
+.license_history__list__header__column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.1rem;
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
+
+.license_history__list__element {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 10px;
+    background-color: #deffde;
+    border: 3px solid #008000;
+    border-radius: 10px;
+    padding-inline: 5px;
+    padding-block: 10px;
+    margin-top: 20px;
+}
+
+.license_history__list__element__text_field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.license_history__list__element__text_field__event {
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 50px;
+    padding-block: 5px;
+    padding-inline: 5px;
+
+    &.activate {
+        background-color: #008000;
+    }
+
+    &.deactivate {
+        background-color: #ff5100;
+    }
+
+    &.force_deactivate {
+        background-color: #ff0000;
+    }
+}

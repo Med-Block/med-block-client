@@ -30,7 +30,7 @@ const UserDisplayLayout: React.FC = () => {
                     email: json.email,
                     firstName: json.firstName,
                     lastName: json.lastName,
-                    role: json.role,
+                    role: json.role === 'user' ? 'patient' : json.role,
                     position: json.position ?? undefined
                 }));
             }
@@ -80,7 +80,7 @@ const UserDisplayLayout: React.FC = () => {
             <main className={cl.user_display__bottom}>
                 <nav className={cl.user_display__bottom__navigation}>
                     {
-                        currentUser.role === 'user' ?
+                        currentUser.role === 'patient' ?
                             <>
                                 <NavLink className={cl.user_display__bottom__navigation__element} to="/my-records">
                                     <svg className={cl.user_display__bottom__navigation__element__img}

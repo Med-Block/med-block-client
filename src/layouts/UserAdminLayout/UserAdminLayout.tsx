@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import advancedFetch from "../../utils/advancedFetch";
 import { useAppSelector } from "../../redux/store";
 import YesNoDialog from "../../components/YesNoDialog/YesNoDialog";
+import UserData from "../../data_types/UserData";
 
 interface UserDataForDoctors {
     id: number,
@@ -38,7 +39,9 @@ const UserAdminLayout: React.FC = () => {
 
             if (response.ok) {
                 const json = await response.json();
-                setUserList(json);
+                setUserList(json.map((el: UserData) => {
+                    return { ...el, role: el.role === 'user' ? 'patient' : el.role };
+                }));
             }
         } catch (error) {
             alert(error);

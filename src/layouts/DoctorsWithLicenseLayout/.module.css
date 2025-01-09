@@ -29,7 +29,7 @@
 }
 
 .doctors_with_license__list {
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .doctors_with_license__list__header {
@@ -39,7 +39,6 @@
     background-color: #87c587;
     padding-inline: 8px;
     padding-block: 10px;
-    margin-top: 20px;
 }
 
 .doctors_with_license__list__header__column {
