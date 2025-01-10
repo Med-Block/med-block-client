@@ -11,6 +11,8 @@ import DoctorBrowseLayout from './layouts/DoctorBrowseLayout/DoctorBrowseLayout'
 import DoctorsWithLicenseLayout from './layouts/DoctorsWithLicenseLayout/DoctorsWithLicenseLayout';
 import AllDoctorsLayout from './layouts/AllDoctorsLayout/AllDoctorsLayout';
 import AdminLicenseHistoryLayout from './layouts/AdminLicenseHistoryLayout/AdminLicenseHistoryLayout';
+import RecordsLayout from './layouts/RecordsLayout/RecordsLayout';
+import EditRecordLayout from './layouts/EditRecordLayout/EditRecordLayout';
 
 function App() {
     return (
@@ -32,7 +34,8 @@ function App() {
                             <Route path='license-history' element={<AdminLicenseHistoryLayout />} />
                         </Route>
                         <Route path='edit-user' element={<EditUserLayout />} />
-                        <Route path='records' element={<></>} />
+                        <Route path='edit-record' element={<EditRecordLayout />} />
+                        <Route path='records' element={<RecordsLayout />} />
                     </Route>
                     <Route path="log-in" element={<LogInLayout />} />
                 </Routes>

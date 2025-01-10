@@ -99,6 +99,9 @@ const UserAdminLayout: React.FC = () => {
             <div className={cl.user_admin__list}>
                 <div className={cl.user_admin__list__header}>
                     <div className={cl.user_admin__list__header__column}>
+                        ID
+                    </div>
+                    <div className={cl.user_admin__list__header__column}>
                         Email address
                     </div>
                     <div className={cl.user_admin__list__header__column}>
@@ -120,6 +123,9 @@ const UserAdminLayout: React.FC = () => {
                 {userList?.map((el, idx) => {
                     return (
                         <div className={cl.user_admin__list__element} key={idx}>
+                            <div className={cl.user_admin__list__element__text_field}>
+                                {el.id}
+                            </div>
                             <div className={cl.user_admin__list__element__text_field}>
                                 {el.email}
                             </div>

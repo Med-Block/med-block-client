@@ -34,7 +34,7 @@
 
 .user_admin__list__header {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 0.5fr;
+    grid-template-columns: 0.3fr 1fr 1fr 1fr 0.7fr 1fr 0.5fr;
     grid-column-gap: 10px;
     background-color: #87c587;
     padding-inline: 8px;
@@ -55,7 +55,7 @@
 
 .user_admin__list__element {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 0.5fr;
+    grid-template-columns: 0.3fr 1fr 1fr 1fr 0.7fr 1fr 0.5fr;
     grid-column-gap: 10px;
     background-color: #deffde;
     border: 3px solid #008000;

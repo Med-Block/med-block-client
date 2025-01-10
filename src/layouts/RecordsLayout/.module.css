@@ -1,0 +1,120 @@
+.records {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateX(-50%);
+    width: calc(100% - 20px);
+    margin-top: 20px;
+    margin-left: 50%;
+}
+
+.records__header {
+    color: #008000;
+}
+
+.records__user_info {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    margin-top: 20px;
+}
+
+.records__user_info__text {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.records__user_info__text {
+    font-size: 1.1rem;
+    font-weight: bold;
+    
+    &:not(:first-child) {
+        margin-top: 5px;
+    }
+}
+
+.records__add_record {
+    width: 100%;
+    max-width: 700px;
+    background-color: #008000;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    padding-block: 7px;
+    margin-top: 20px;
+
+    &:hover {
+        background-color: #006100;
+    }
+}
+
+.records__list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 700px;
+}
+
+.records__list__element {
+    width: calc(100% - 20px);
+    background-color: rgb(204, 204, 204);
+    border-radius: 10px;
+    padding-block: 10px;
+    padding-inline: 10px;
+    margin-top: 20px;
+}
+
+.records__list__element__control {
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.records__list__element__control__edit {
+    width: 100%;
+    background-color: #d38900;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    padding-block: 2px;
+    padding-inline: 5px;
+
+    &:hover {
+        background-color: #885800;
+    }
+}
+
+.records__list__element__type {
+    width: fit-content;
+    font-size: 1.1rem;
+    border: 2px solid #008000;
+    border-radius: 6px;
+    padding-block: 2px;
+    padding-inline: 3px;
+}
+
+.records__list__element__header {
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+.records__list__element__diagnosis {
+    font-size: 1.05rem;
+    margin-top: 10px;
+}
+
+.records__list__element__created_at {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.records__list__element__updated_at {
+    font-weight: bold;
+    margin-top: 10px;
+}
