@@ -75,7 +75,7 @@ const RecordsLayout: React.FC = () => {
 
     React.useEffect(() => {
         loadData();
-    }, [errorMessage, loadData]);
+    }, [loadData]);
 
     React.useEffect(() => {
         if (currentUser?.role !== 'doctor') {
