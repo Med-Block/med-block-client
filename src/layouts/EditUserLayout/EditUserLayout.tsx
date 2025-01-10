@@ -5,15 +5,20 @@ import { useAppSelector } from "../../redux/store";
 import advancedFetch from "../../utils/advancedFetch";
 import UserData from "../../data_types/UserData";
 import YesNoDialog from "../../components/YesNoDialog/YesNoDialog";
+import LicenseData from "../../data_types/LicenseData";
 
 const EditUserLayout: React.FC = () => {
     const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
-    const [userToEdit, setUserToEdit] = React.useState<UserData | null | undefined>(null);
-    const [isUserFound, setIsUserFound] = React.useState<boolean>(false);
+    const [userToEdit, setUserToEdit] = React.useState<UserData | null>(null);
     const [roleValue, setRoleValue] = React.useState<string>('user');
 
-    const [yesNoDialogIsOpened, setYesNoDialogIsOpened] = React.useState<boolean>(false);
+    const [licenseList, setLicenseList] = React.useState<Array<LicenseData> | null>(null);
+    const [licenseToDeactivate, setLicenseToDeactivate] = React.useState<number | null>(null);
+
+    const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+    const [yesNoDialogForPasswordResettingIsOpened, setYesNoDialogForPasswordResettingIsOpened] = React.useState<boolean>(false);
+    const [yesNoDialogForLicenseDeactivationIsOpened, setYesNoDialogForLicenseDeactivationIsOpened] = React.useState<boolean>(false);
 
     const emailInputRef = React.useRef<HTMLInputElement>(null);
     const firstNameInputRef = React.useRef<HTMLInputElement>(null);
@@ -28,7 +33,7 @@ const EditUserLayout: React.FC = () => {
 
     const loadUserData = React.useCallback(async () => {
         try {
-            const response = await advancedFetch(`http://${window.location.hostname}:7000/api/user/${userId}`, {
+            let response = await advancedFetch(`http://${window.location.hostname}:7000/api/user/${userId}`, {
                 method: "GET",
                 mode: "cors",
                 credentials: "include",
@@ -41,10 +46,26 @@ const EditUserLayout: React.FC = () => {
             if (response.ok) {
                 const json = await response.json();
                 setUserToEdit(json);
-                setIsUserFound(true);
                 setRoleValue(json.role);
             } else {
-                setUserToEdit(undefined);
+                setErrorMessage(await response.text());
+            }
+
+            response = await advancedFetch(`http://${window.location.hostname}:7000/api/license/user/${userId}`, {
+                method: "GET",
+                mode: "cors",
+                credentials: "include",
+                headers: {
+                    "Authorization": localStorage.getItem('token') ?
+                        `Bearer ${localStorage.getItem('token')}` : ""
+                }
+            });
+
+            if (response.ok) {
+                const json = await response.json();
+                setLicenseList(json);
+            } else {
+                setErrorMessage(await response.text());
             }
         } catch (error) {
             alert(`Error while checking authorization: ${error}`);
@@ -131,7 +152,7 @@ const EditUserLayout: React.FC = () => {
             });
 
             if (response.ok) {
-                setYesNoDialogIsOpened(false);
+                setYesNoDialogForPasswordResettingIsOpened(false);
                 alert('Password has been reset');
             } else {
                 alert(await response.text());
@@ -141,16 +162,48 @@ const EditUserLayout: React.FC = () => {
         }
     }, [userId]);
 
+    const deactivateLicenseRequest = React.useCallback(async () => {
+        setIsSaving(true);
+
+        try {
+            const response = await advancedFetch(`http://${window.location.hostname}:7000/api/license/force_deactivate/${licenseToDeactivate}`, {
+                method: "POST",
+                mode: "cors",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": localStorage.getItem('token') ?
+                        `Bearer ${localStorage.getItem('token')}` : ""
+                }
+            });
+
+            if (response.ok) {
+                setYesNoDialogForLicenseDeactivationIsOpened(false);
+                setLicenseList(prev => {
+                    return [...prev ?? []].filter(el => el.id !== licenseToDeactivate);
+                });
+                setLicenseToDeactivate(null);
+            } else {
+                alert(await response.text());
+            }
+        } catch (error) {
+            alert(`Error while checking authorization: ${error}`);
+        }
+
+        setIsSaving(false);
+    }, [licenseToDeactivate]);
+
     const cancelPasswordResetting = React.useCallback(() => {
-        setYesNoDialogIsOpened(false);
+        setYesNoDialogForPasswordResettingIsOpened(false);
+    }, []);
+
+    const cancelLicenseDeactivation = React.useCallback(() => {
+        setYesNoDialogForLicenseDeactivationIsOpened(false);
     }, []);
 
     React.useEffect(() => {
         if (userId !== 'new') {
             loadUserData();
-        } else {
-            setUserToEdit(undefined);
-            setIsUserFound(true);
         }
     }, [loadUserData, userId]);
 
@@ -160,17 +213,17 @@ const EditUserLayout: React.FC = () => {
         }
     }, [currentUser?.role, navigate]);
 
-    if (!currentUser || userToEdit === null) {
+    if (!errorMessage && (!currentUser || !userToEdit || !licenseList)) {
         return (
             <p>Loading...</p>
         );
     }
 
-    if (!isUserFound) {
+    if (errorMessage) {
         return (
             <div className={cl.edit_user}>
                 <h1 className={cl.edit_user__header}>
-                    User not found
+                    {errorMessage}
                 </h1>
             </div>
         );
@@ -220,7 +273,7 @@ const EditUserLayout: React.FC = () => {
                         ref={lastNameInputRef} />
                 </div>
                 {
-                    currentUser.id !== userToEdit?.id && currentUser.role === 'admin' ?
+                    currentUser?.id !== userToEdit?.id && currentUser?.role === 'admin' ?
                         <div className={cl.edit_user__data__field}>
                             <label className={cl.edit_user__data__field__label}>
                                 Role
@@ -262,15 +315,15 @@ const EditUserLayout: React.FC = () => {
                 }
                 {
                     currentUser?.role === 'admin' ?
-                    <div className={cl.edit_user__data__field}>
-                        <button
-                            className={cl.edit_user__data__field__button}
-                            type="button"
-                            onClick={() => setYesNoDialogIsOpened(true)}>
-                            Reset user's password
-                        </button>
-                    </div>
-                    : <></>
+                        <div className={cl.edit_user__data__field}>
+                            <button
+                                className={cl.edit_user__data__field__button}
+                                type="button"
+                                onClick={() => setYesNoDialogForPasswordResettingIsOpened(true)}>
+                                Reset user's password
+                            </button>
+                        </div>
+                        : <></>
                 }
             </div>
             <div className={cl.edit_user__control}>
@@ -284,12 +337,57 @@ const EditUserLayout: React.FC = () => {
                     Go to the list
                 </Link>
             </div>
+            {
+                currentUser?.role === 'admin' && ['doctor', 'user'].includes(userToEdit?.role || '') ?
+                    <div className={cl.edit_user__licenses}>
+                        <h2 className={cl.edit_user__licenses__header}>
+                            Licenses
+                        </h2>
+                        <div className={cl.edit_user__licenses__list}>
+                            <div className={cl.edit_user__licenses__list__header}>
+                                <div className={cl.edit_user__licenses__list__header__column}>
+                                    {userToEdit?.role === 'doctor' ? 'Patient ID' : 'Doctor ID'}
+                                </div>
+                                <div className={cl.edit_user__licenses__list__header__column}>
+                                    Actions
+                                </div>
+                            </div>
+                            {licenseList?.map((el, idx) => {
+                                return (
+                                    <div className={cl.edit_user__licenses__list__element} key={idx}>
+                                        <div className={cl.edit_user__licenses__list__element__text_field}>
+                                            <a href={`/edit-user?id=${userToEdit?.role === 'doctor' ? el.userId : el.doctorId}`}>
+                                                {userToEdit?.role === 'doctor' ? el.userId : el.doctorId}
+                                            </a>
+                                        </div>
+                                        <div className={cl.edit_user__licenses__list__element__actions}>
+                                            <button className={cl.edit_user__licenses__list__element__actions__deactivate}
+                                                onClick={() => {
+                                                    setYesNoDialogForLicenseDeactivationIsOpened(true);
+                                                    setLicenseToDeactivate(el.id);
+                                                }}>
+                                                Deactivate
+                                            </button>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    : <></>
+            }
             <YesNoDialog
-                dialogState={yesNoDialogIsOpened}
+                dialogState={yesNoDialogForPasswordResettingIsOpened}
                 title='Reset password'
                 description="Are you sure you want to reset the user's password? New password will be sent to the user by email."
                 onYesButtonClick={resetPasswordRequest}
                 onNoButtonClick={cancelPasswordResetting} />
+            <YesNoDialog
+                dialogState={yesNoDialogForLicenseDeactivationIsOpened}
+                title='Force license deactivation'
+                description="Are you sure you want to deactivate the license?"
+                onYesButtonClick={deactivateLicenseRequest}
+                onNoButtonClick={cancelLicenseDeactivation} />
         </div>
     );
 };

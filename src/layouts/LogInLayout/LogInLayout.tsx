@@ -34,7 +34,7 @@ const LogInLayout: React.FC = () => {
 
             if (response.ok) {
                 localStorage.setItem('token', await response.text());
-                navigate('/my-records');
+                navigate('/');
             } else {
                 alert(await response.text());
             }
