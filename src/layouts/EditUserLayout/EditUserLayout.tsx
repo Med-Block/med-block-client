@@ -33,6 +33,8 @@ const EditUserLayout: React.FC = () => {
 
     const loadUserData = React.useCallback(async () => {
         try {
+            let userData;
+
             let response = await advancedFetch(`http://${window.location.hostname}:7000/api/user/${userId}`, {
                 method: "GET",
                 mode: "cors",
@@ -47,25 +49,30 @@ const EditUserLayout: React.FC = () => {
                 const json = await response.json();
                 setUserToEdit(json);
                 setRoleValue(json.role);
+                userData = json;
             } else {
-                setErrorMessage(await response.text());
+                return setErrorMessage(await response.text());
             }
 
-            response = await advancedFetch(`http://${window.location.hostname}:7000/api/license/user/${userId}`, {
-                method: "GET",
-                mode: "cors",
-                credentials: "include",
-                headers: {
-                    "Authorization": localStorage.getItem('token') ?
-                        `Bearer ${localStorage.getItem('token')}` : ""
+            if (userData.role !== 'admin') {
+                response = await advancedFetch(`http://${window.location.hostname}:7000/api/license/user/${userId}`, {
+                    method: "GET",
+                    mode: "cors",
+                    credentials: "include",
+                    headers: {
+                        "Authorization": localStorage.getItem('token') ?
+                            `Bearer ${localStorage.getItem('token')}` : ""
+                    }
+                });
+    
+                if (response.ok) {
+                    const json = await response.json();
+                    setLicenseList(json);
+                } else {
+                    return setErrorMessage(await response.text());
                 }
-            });
-
-            if (response.ok) {
-                const json = await response.json();
-                setLicenseList(json);
             } else {
-                setErrorMessage(await response.text());
+                setLicenseList([]);
             }
         } catch (error) {
             alert(`Error while checking authorization: ${error}`);
