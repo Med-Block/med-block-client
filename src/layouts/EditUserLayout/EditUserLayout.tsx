@@ -10,7 +10,7 @@ import LicenseData from "../../data_types/LicenseData";
 const EditUserLayout: React.FC = () => {
     const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
-    const [userToEdit, setUserToEdit] = React.useState<UserData | null>(null);
+    const [userToEdit, setUserToEdit] = React.useState<UserData | null | undefined>(null);
     const [roleValue, setRoleValue] = React.useState<string>('user');
 
     const [licenseList, setLicenseList] = React.useState<Array<LicenseData> | null>(null);
@@ -211,6 +211,9 @@ const EditUserLayout: React.FC = () => {
     React.useEffect(() => {
         if (userId !== 'new') {
             loadUserData();
+        } else {
+            setUserToEdit(undefined);
+            setLicenseList([]);
         }
     }, [loadUserData, userId]);
 
@@ -220,7 +223,7 @@ const EditUserLayout: React.FC = () => {
         }
     }, [currentUser?.role, navigate]);
 
-    if (!errorMessage && (!currentUser || !userToEdit || !licenseList)) {
+    if (!errorMessage && (!currentUser || userToEdit === null || !licenseList)) {
         return (
             <p>Loading...</p>
         );
