@@ -54,7 +54,7 @@ const EditUserLayout: React.FC = () => {
                 return setErrorMessage(await response.text());
             }
 
-            if (userData.role !== 'admin') {
+            if (currentUser?.role === 'admin' && userData.role !== 'admin') {
                 response = await advancedFetch(`http://${window.location.hostname}:7000/api/license/user/${userId}`, {
                     method: "GET",
                     mode: "cors",
@@ -77,7 +77,7 @@ const EditUserLayout: React.FC = () => {
         } catch (error) {
             alert(`Error while checking authorization: ${error}`);
         }
-    }, [userId]);
+    }, [currentUser?.role, userId]);
 
     async function registerUserRequest() {
         setIsSaving(true);
